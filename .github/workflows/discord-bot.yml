@@ -2,7 +2,7 @@ name: Discord Event Bot
 
 on:
   schedule:
-    - cron: "*/1 * * * *"
+    - cron: "*/1 * * * *" # รันทุก 1 นาที (UTC)
   workflow_dispatch:
 
 jobs:
@@ -21,4 +21,6 @@ jobs:
         run: echo 'export LUA_PATH="$HOME/.luarocks/share/lua/5.3/?.lua;$HOME/.luarocks/share/lua/5.3/?/init.lua;;"' >> $GITHUB_ENV
 
       - name: Run Lua script
-        run: lua5.3 send_webhook.lua
+        run: |
+          export LUA_PATH="$HOME/.luarocks/share/lua/5.3/?.lua;$HOME/.luarocks/share/lua/5.3/?/init.lua;;"
+          lua5.3 send_webhook.lua
