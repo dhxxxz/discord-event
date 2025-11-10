@@ -10,12 +10,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: leafo/gh-actions-lua@v1
-        with:
-          lua-version: "5.3"
-      - name: Install dkjson
-        run: luarocks install dkjson --local
-      - name: Set LUA_PATH
+
+      - name: Install Lua 5.3
+        run: sudo apt update && sudo apt install -y lua5.3 luarocks
+
+      - name: Install dkjson locally
+        run: luarocks install --local dkjson
+
+      - name: Set LUA_PATH for local rocks
         run: echo 'export LUA_PATH="$HOME/.luarocks/share/lua/5.3/?.lua;$HOME/.luarocks/share/lua/5.3/?/init.lua;;"' >> $GITHUB_ENV
+
       - name: Run Lua script
         run: lua5.3 send_webhook.lua
