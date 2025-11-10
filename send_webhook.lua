@@ -40,7 +40,6 @@ local function sendWebhook(eventName)
             timestamp = os.date("!%Y-%m-%dT%H:%M:%SZ")
         }},
     }
-
     local body = json.encode(data)
     os.execute(string.format(
         'curl -H "Content-Type: application/json" -X POST -d \'%s\' "%s"',
@@ -50,14 +49,10 @@ end
 
 sendWebhook("สคริปต์กำลังทำงาน ✅")
 
-while true do
-    local currentTime = os.date("%H:%M")
-    local events = schedule[currentTime]
-    if events then
-        for _, eventName in ipairs(events) do
-            sendWebhook(eventName)
-        end
-        os.execute("sleep 60")
+local currentTime = os.date("%H:%M")
+local events = schedule[currentTime]
+if events then
+    for _, eventName in ipairs(events) do
+        sendWebhook(eventName)
     end
-    os.execute("sleep 60")
 end
